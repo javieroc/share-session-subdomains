@@ -1,0 +1,13 @@
+version: "3.3"
+
+services:
+  postgresdb:
+    image: postgres
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: msauth
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - 5432:5432
