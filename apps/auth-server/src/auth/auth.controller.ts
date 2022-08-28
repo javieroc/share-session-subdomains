@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
@@ -20,8 +20,10 @@ export class AuthController {
   @Post('login')
   async login(@Req() req, @Res() res: Response) {
     const data = this.authService.login(req.user);
-    res.cookie('auth', data, { httpOnly: true });
-    res.sendStatus(200);
+    const expiresDate = new Date();
+    expiresDate.setDate(expiresDate.getDate() + 30);
+    res.cookie('auth', data, { httpOnly: true, expires: expiresDate });
+    return res.sendStatus(200);
   }
 
   @Post('register')
@@ -31,7 +33,14 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Req() req) {
+  getProfile(@Req() req: Request) {
     return req.user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('logout')
+  logout(@Res() res: Response) {
+    res.clearCookie('auth', { httpOnly: true });
+    return res.sendStatus(200);
   }
 }

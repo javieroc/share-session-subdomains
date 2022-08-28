@@ -3,7 +3,7 @@
   "version": 2,
   "projects": {
     "auth-server": "apps/auth-server",
-    "web1": "apps/web1",
-    "web1-e2e": "apps/web1-e2e"
+    "panel": "apps/panel",
+    "panel-e2e": "apps/panel-e2e"
   }
 }
