@@ -20,7 +20,6 @@ api.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
     const originalRequest = error.config;
-    console.log('original request', originalRequest)
     if (originalRequest.method === 'get' && error.response?.status && error.response.status / 100 !== 2) {
       history.push(redirects[error.response.status]);
     }
@@ -28,14 +27,6 @@ api.interceptors.response.use(
   },
 );
 
-// const setAuthHeader = (token: string): void => {
-//   api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-// };
-
-// const removeAuthHeader = (): void => {
-//   delete api.defaults.headers.common['Authorization'];
-// };
-
 export {
-  api, // setAuthHeader, removeAuthHeader,
+  api,
 };
