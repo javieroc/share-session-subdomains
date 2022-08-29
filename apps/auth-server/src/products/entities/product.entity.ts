@@ -13,6 +13,9 @@ class Product {
 
   @Column()
   description!: string;
+
+  @Column({ nullable: true })
+  url!: string;
 }
 
 export { Product };

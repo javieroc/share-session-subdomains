@@ -1,0 +1,82 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/phish/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/phish",
+        "index": "apps/phish/src/index.html",
+        "baseHref": "/",
+        "main": "apps/phish/src/main.tsx",
+        "polyfills": "apps/phish/src/polyfills.ts",
+        "tsConfig": "apps/phish/tsconfig.app.json",
+        "assets": ["apps/phish/src/favicon.ico", "apps/phish/src/assets"],
+        "styles": [],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/phish/src/environments/environment.ts",
+              "with": "apps/phish/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "phish:build",
+        "hmr": true,
+        "port": 4201,
+        "allowedHosts": "all"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "phish:build:development"
+        },
+        "production": {
+          "buildTarget": "phish:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/phish/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/phish"],
+      "options": {
+        "jestConfig": "apps/phish/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

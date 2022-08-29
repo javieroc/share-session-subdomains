@@ -6,7 +6,7 @@ import { AppModule } from './app/app.module';
 async function bootstrap() {
   const app = await NestFactory.create(
     AppModule,
-    { cors: { credentials: true, origin: 'http://tdb-phish.com' } }
+    { cors: { credentials: true, origin: /https?:\/\/(([^/]+\.)?tdb-secure\.com)$/i, } }
   );
   app.use(cookieParser());
   const globalPrefix = 'api';
